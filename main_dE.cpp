@@ -5,16 +5,17 @@
 #include "global.h"
 #include <armadillo>
 using namespace arma;
+using namespace std;
 
 int main()
 {
     cout.precision(15);
     //Define the ring
-    Line FODO;    efodo(FODO);
+    LINE FODO;    efodo(FODO);
 
 
-    size_t nParticle=11, nTurn=1e7, nSkip=1e3;
-    vector<double> x(10); fill(x.begin(), x.end(), 0.0);
+    size_t nParticle=11, nTurn=1e8, nSkip=1e4;
+    vector<double> x(10); std::fill(x.begin(), x.end(), 0.0);
 
     mat xData(nTurn/nSkip+1,2*nParticle);xData.zeros();
     mat zData(nTurn/nSkip+1,2*nParticle);zData.zeros();
@@ -22,7 +23,7 @@ int main()
     mat spinData(nTurn/nSkip+1,2*nParticle);spinData.zeros();
 
     for(size_t n=0;n<nParticle;n++){
-        fill(x.begin(), x.end(), 0.0);
+        std::fill(x.begin(), x.end(), 0.0);
         //initialization
         x[dE_]=((double)n-((double)nParticle-1.0)/2.0)*1.0e-4;
         for(size_t i=0;i<nTurn;i++){

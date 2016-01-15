@@ -14,7 +14,6 @@ void efodo(LINE & FODO)
     double lDrift = 0.2;
 
   ELEMENT temp;
-  temp.Norder=4;
   for(int i=0;i<12;i++){
       temp.SetElem(DRIFT_,0.5*lDrift);
       FODO.Append(temp);
