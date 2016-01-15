@@ -4,26 +4,28 @@
 //                               Line  class
 //
 //=========================================================================
-Line::Line ()
+LINE::LINE ()
 {
     Ncell = 0;
     Length = 0;
 }
 
-void Line::Update ()
+void LINE::Update ()
 {
     double sPointer = 0.;
     for (size_t i = 0; i < Cell.size (); i++)
     {
-        Cell[i]->S = sPointer;
-        sPointer = Cell[i]->L + sPointer;
+        Cell[i].S = sPointer;
+        sPointer = Cell[i].L + sPointer;
     }
     Ncell = Cell.size ();
     Length = sPointer;
 }
 
-void Line::Append (Element * elem)
+void LINE::Append (ELEMENT elem)
 {
     Cell.push_back (elem);
-    Update ();
+    elem.S=Length;
+    Length += elem.L;
+    Ncell+=1;
 }

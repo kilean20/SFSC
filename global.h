@@ -1,13 +1,6 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
-#include <math.h>
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
-    #include <include/armadillo>
-#else
-    #include <armadillo>
-#endif
-using namespace arma;
 //=========================================================================
 //                           Global  constants 
 //=========================================================================
@@ -17,15 +10,18 @@ using namespace arma;
 const double MDM = 0.00115965218;  // anormalous magnetic momentum
 const double EDM = 7.3E-17;  // electric momentum g-factor
 
-//-------------------------------------------------------------------------
-const double C1 = 1.0 / (2.0 - pow(2.0, 1.0/3.0));
-const double C0 = 1.0 - 2.0*C1;
-
+//-----------------------composition method step size---------------------
+const double R4[3]={1.3512071919596578, -1.7024143839193155,
+                    1.3512071919596578};
+const double R6[7]={0.78451361047755726382, 0.23557321335935813368,
+                   -1.17767998417887100695, 1.31518632068391122204,
+                   -1.17767998417887100695, 0.23557321335935813368,
+                    0.78451361047755726382};
 //-------------------------state-vector-index------------------------------
 enum x_index {x_=0, px_=1, s_= 2, ps_=3, z_=4, pz_=5, vt_=6, dE_=7, Sx_=8, Ss_=9};
 
 //-------------------------state-vector-index------------------------------
-enum type_index {DRIFT_=0, eBEND_=1, eQUAD_= 2};
+enum type_index {DRIFT_=1, eBEND_=2, eQUAD_= 3, RFcav_=4};
 
 //-----------relativistic parameters for electron magic energy-------------
 const double GAMMA=29.38243572993826;

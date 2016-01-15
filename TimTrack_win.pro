@@ -8,14 +8,16 @@ TARGET = TimTrack
 
 SOURCES += main.cpp\
     element.cpp\
-    line.cpp \
-    ebendpass.cpp
+    line.cpp
 
 HEADERS += element.h \
     line.h \
     global.h \
     efodo.h \
-    ebendpass.h
+    ebendpass.h \
+    driftpass.h \
+    equadpass.h \
+    rfcavpass.h
 
 HEADERS  += \
     ./include/armadillo_bits/access.hpp \

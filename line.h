@@ -2,7 +2,6 @@
 #define LINE_H
 
 #include <vector>
-#include "global.h"
 #include "element.h"
 
 using namespace std;
@@ -11,14 +10,14 @@ using namespace std;
 //                               Line  class
 //
 //=========================================================================
-class Line
+class LINE
 {
 public:
-  Line ();
+  LINE ();
   void Update ();
-  void Append(Element * x);
+  void Append(ELEMENT elem);
 
-  vector<Element * > Cell;
+  vector<ELEMENT> Cell;
   double Length;		//---length of reference orbit
   size_t Ncell;			//---number of elements
 };

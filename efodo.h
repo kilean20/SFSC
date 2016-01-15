@@ -1,34 +1,43 @@
-//#include "element.h"
+#include "element.h"
 #include "line.h"
+#include <cmath>
 
-void efodo(Line & FODO)
+using namespace std;
+
+void efodo(LINE & FODO)
 {
-    double ang = 2*datum::pi/12/2;
+    double ang = 2*M_PI/12/2;
     double quadK = 5.0;
 
     double lBend = 0.4;
     double lQuad = 0.1;
     double lDrift = 0.2;
 
-  Element * temp;
+  ELEMENT temp;
+  temp.Norder=4;
   for(int i=0;i<12;i++){
-      temp = new DRIFT(0.5*lDrift);
+      temp.SetElem(DRIFT_,0.5*lDrift);
       FODO.Append(temp);
-      temp = new eBEND(lBend, ang);
+      temp.SetElem(eBEND_,lBend, ang);temp.Nint=12;
       FODO.Append(temp);
-      temp = new DRIFT(lDrift);
+      temp.SetElem(DRIFT_,lDrift);
       FODO.Append(temp);
-      temp = new eQUAD(lQuad, quadK);
+      temp.SetElem(eQUAD_,lQuad, quadK);temp.Nint=3;
       FODO.Append(temp);
-      temp = new DRIFT(lDrift);
+      temp.SetElem(DRIFT_,lDrift);
       FODO.Append(temp);
-      temp = new eBEND(lBend, ang);
+      temp.SetElem(eBEND_,lBend, ang);temp.Nint=12;
       FODO.Append(temp);
-      temp = new DRIFT(lDrift);
+      temp.SetElem(DRIFT_,lDrift);
       FODO.Append(temp);
-      temp = new eQUAD(lQuad, -quadK);
+      temp.SetElem(eQUAD_,lQuad, -quadK);temp.Nint=3;
       FODO.Append(temp);
-      temp = new DRIFT(0.5*lDrift);
+      temp.SetElem(DRIFT_,0.5*lDrift);
       FODO.Append(temp);
   }
+  const double cSpeed=299792458;
+  const double revFreq = (BETA*cSpeed)/FODO.Length;
+
+  temp.SetElem(RFcav_,1000.0, 3.0*revFreq, 0.0);
+  FODO.Append(temp);
 }
