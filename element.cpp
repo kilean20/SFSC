@@ -19,6 +19,7 @@
 ELEMENT::ELEMENT():Type(0),L(0){Norder=2; FlagSpinTrack=1;}
 //-------------------------------constructor1------------------------------
 ELEMENT::ELEMENT(size_t type, double l):Type(type),L(l){
+    Nint = 4;
     Norder=2;   FlagSpinTrack=1;
     switch (type){
     case DRIFT_:
@@ -152,13 +153,13 @@ ELEMENT::sc_Pass (STATvec &sigma)
 {
     switch (Type) {
     case DRIFT_:
-        sc_DriftPass(sigma, L, Ksc, Ninit);
+        sc_DriftPass(sigma, L, Ksc, Nint);
         break;
     case eBEND_:
-        sc_eBendPass(sigma, L, eBend.Angle, Ksc, Ninit);
+        sc_eBendPass(sigma, L, eBend.Angle, Ksc, Nint);
         break;
     case eQUAD_:
-        sc_eQuadPass(sigma, L, eQuad.K1, Ksc, Ninit);
+        sc_eQuadPass(sigma, L, eQuad.K1, Ksc, Nint);
         break;
     case RFcav_:
         break;
