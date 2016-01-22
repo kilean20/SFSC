@@ -3,6 +3,7 @@
 #include <vector>
 #include <cmath>
 #include "global.h"
+#include "statvec.h"
 
 using namespace std;
 //=========================================================================
@@ -59,8 +60,9 @@ public:
 
 
     size_t Nint, Norder, FlagSpinTrack;
-    double L, S;
+    double L, S, Ksc;
     void Pass (vector<double> &x);
+    void sc_Pass (STATvec &sigma);
 };
 
 

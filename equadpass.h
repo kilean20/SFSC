@@ -11,8 +11,7 @@ using namespace std;
 //=============================================================================
 //                       eQuadSpinPass 2nd order method
 //=============================================================================
-inline void
-eQuadSpinPass(vector<double> &x, double L, double K1, size_t Nint){
+void eQuadSpinPass(vector<double> &x, double L, double K1, size_t Nint){
     const double betaGammaK1 = BETAGAMMA*K1;
     double dummy = x[dE_]*BETA2 + 1.0 - 0.5*K1*(x[x_]*x[x_]-x[z_]*x[z_])*BETA2;
 
@@ -84,8 +83,7 @@ eQuadSpinPass(vector<double> &x, double L, double K1, size_t Nint){
 //=============================================================================
 //                 eQuadSpinPass High order composition method
 //=============================================================================
-inline void
-eQuadSpinPass(vector<double> &x, double L, double K1, size_t Nint, size_t Norder){
+void eQuadSpinPass(vector<double> &x, double L, double K1, size_t Nint, size_t Norder){
     // initialize step size
     vector<double> R;
     size_t nR;
@@ -219,8 +217,7 @@ eQuadSpinPass(vector<double> &x, double L, double K1, size_t Nint, size_t Norder
 //=============================================================================
 //                       eQuadOrbitPass 2nd order method
 //=============================================================================
-inline void
-eQuadOrbitPass(vector<double> &x, double L, double K1, size_t Nint){
+void eQuadOrbitPass(vector<double> &x, double L, double K1, size_t Nint){
     double dummy = x[dE_]*BETA2 + 1.0 - 0.5*K1*(x[x_]*x[x_]-x[z_]*x[z_])*BETA2;
 
     // initialize p_s : hard edge fringe field effect
@@ -262,8 +259,7 @@ eQuadOrbitPass(vector<double> &x, double L, double K1, size_t Nint){
 //=============================================================================
 //                eQuadOrbitPass High order composition method
 //=============================================================================
-inline void
-eQuadOrbitPass(vector<double> &x, double L, double K1, size_t Nint, size_t Norder){
+void eQuadOrbitPass(vector<double> &x, double L, double K1, size_t Nint, size_t Norder){
     // initialize step size
     vector<double> R;
     size_t nR;

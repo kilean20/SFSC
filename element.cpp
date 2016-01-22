@@ -3,6 +3,9 @@
 #include "ebendpass.h"
 #include "equadpass.h"
 #include "rfcavpass.h"
+#include "sc_driftpass.h"
+#include "sc_ebendpass.h"
+#include "sc_equadpass.h"
 #include "global.h"
 
 //#include <armadillo>
@@ -125,17 +128,39 @@ ELEMENT::Pass (vector<double> &x)
     case eQUAD_:
         if (FlagSpinTrack)
             if (Norder==2)
-                eQuadSpinPass(x, L, eBend.Angle, Nint);
+                eQuadSpinPass(x, L, eQuad.K1, Nint);
             else
-                eQuadSpinPass(x, L, eBend.Angle, Nint, Norder);
+                eQuadSpinPass(x, L, eQuad.K1, Nint, Norder);
         else
             if (Norder==2)
-                eQuadOrbitPass(x, L, eBend.Angle, Nint);
+                eQuadOrbitPass(x, L, eQuad.K1, Nint);
             else
-                eQuadOrbitPass(x, L, eBend.Angle, Nint, Norder);
+                eQuadOrbitPass(x, L, eQuad.K1, Nint, Norder);
         break;
     case RFcav_:
         RFcavPass(x, RFcav.Vrf, RFcav.Wrf, RFcav.Phase);
+        break;
+    default:
+        break;
+    }
+}
+//=========================================================================
+//             Space Charge Pass Method of Statistical Moments
+//=========================================================================
+void
+ELEMENT::sc_Pass (STATvec &sigma)
+{
+    switch (Type) {
+    case DRIFT_:
+        sc_DriftPass(sigma, L, Ksc, Ninit);
+        break;
+    case eBEND_:
+        sc_eBendPass(sigma, L, eBend.Angle, Ksc, Ninit);
+        break;
+    case eQUAD_:
+        sc_eQuadPass(sigma, L, eQuad.K1, Ksc, Ninit);
+        break;
+    case RFcav_:
         break;
     default:
         break;

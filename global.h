@@ -25,6 +25,7 @@ enum type_index {DRIFT_=1, eBEND_=2, eQUAD_= 3, RFcav_=4};
 
 //-----------relativistic parameters for electron magic energy-------------
 const double GAMMA=29.38243572993826;
+const double GAMMA2=GAMMA*GAMMA;
 const double BETA=0.9994206777202302;
 const double BETA2=BETA*BETA;
 const double BETAGAMMA=GAMMA*BETA; // beta_0 gamma_0
