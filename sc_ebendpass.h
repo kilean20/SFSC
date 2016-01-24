@@ -82,15 +82,13 @@ dpz_eBend(size_t nx, size_t npx, size_t nz, size_t npz, STATvec & sigma, double 
 
 void sc_eBendPass(STATvec & sigma, double  L, double Angle, double Ksc, size_t Nint){
 
-    const double lambda = L/(double)Nint;
     const double iRho = L/Angle;
+    const double ds = L/(double)Nint;
 
     double r, denom;
-    STATvec tempSigma;
+    STATvec sigma1,sigma2,sigma3,sigma4,sigmaTemp;
 
     for (size_t i=0;i<Nint;i++){
-
-        tempSigma = sigma;
         denom =1.0/(sigma(2,0,0,0)*(sigma(2,0,0,0)+sigma(0,0,2,0)));
         r=sigma(0,0,2,0)/sigma(2,0,0,0);
 
@@ -99,15 +97,64 @@ void sc_eBendPass(STATvec & sigma, double  L, double Angle, double Ksc, size_t N
                 for (size_t nz=0;nz<4;nz++){
                     for (size_t npz=0;npz<4;npz++){
                         if(nx+npx+nz+npz<5){
-                            sigma(nx,npx,nz,npz)+=lambda*(nx*dx_eBend(nx,npx,nz,npz,tempSigma,r,iRho,Ksc,denom)
-                                                         + npx*dpx_eBend(nx,npx,nz,npz,tempSigma,r,iRho,Ksc,denom)
-                                                         + nz*dz_eBend(nx,npx,nz,npz,tempSigma,r,iRho,Ksc,denom)
-                                                         + npz*dpz_eBend(nx,npx,nz,npz,tempSigma,r,iRho,Ksc,denom));
+                            sigma1(nx,npx,nz,npz)=0.5*ds*(nx*dx_eBend(nx,npx,nz,npz,sigma,r,iRho,Ksc,denom)
+                                                          + npx*dpx_eBend(nx,npx,nz,npz,sigma,r,iRho,Ksc,denom)
+                                                          + nz*dz_eBend(nx,npx,nz,npz,sigma,r,iRho,Ksc,denom)
+                                                          + npz*dpz_eBend(nx,npx,nz,npz,sigma,r,iRho,Ksc,denom));
                         }
                     }
                 }
             }
         }
+        sigmaTemp=sigma+sigma1;
+        r=(sigma(0,0,2,0)+sigma1(0,0,2,0))/(sigma(2,0,0,0)+sigma1(2,0,0,0));
+        for (size_t nx=0;nx<4;nx++){
+            for (size_t npx=0;npx<4;npx++){
+                for (size_t nz=0;nz<4;nz++){
+                    for (size_t npz=0;npz<4;npz++){
+                        if(nx+npx+nz+npz<5){
+                            sigma2(nx,npx,nz,npz)=0.5*ds*(nx*dx_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
+                                                          + npx*dpx_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
+                                                          + nz*dz_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
+                                                          + npz*dpz_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom));
+                        }
+                    }
+                }
+            }
+        }
+        sigmaTemp=sigma+sigma2;
+        r=(sigma(0,0,2,0)+sigma2(0,0,2,0))/(sigma(2,0,0,0)+sigma2(2,0,0,0));
+        for (size_t nx=0;nx<4;nx++){
+            for (size_t npx=0;npx<4;npx++){
+                for (size_t nz=0;nz<4;nz++){
+                    for (size_t npz=0;npz<4;npz++){
+                        if(nx+npx+nz+npz<5){
+                            sigma3(nx,npx,nz,npz)=ds*(nx*dx_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
+                                                      + npx*dpx_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
+                                                      + nz*dz_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
+                                                      + npz*dpz_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom));
+                        }
+                    }
+                }
+            }
+        }
+        sigmaTemp=sigma+sigma3;
+        r=(sigma(0,0,2,0)+sigma3(0,0,2,0))/(sigma(2,0,0,0)+sigma3(2,0,0,0));
+        for (size_t nx=0;nx<4;nx++){
+            for (size_t npx=0;npx<4;npx++){
+                for (size_t nz=0;nz<4;nz++){
+                    for (size_t npz=0;npz<4;npz++){
+                        if(nx+npx+nz+npz<5){
+                            sigma4(nx,npx,nz,npz)=ds*(nx*dx_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
+                                                      + npx*dpx_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
+                                                      + nz*dz_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
+                                                      + npz*dpz_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom));
+                        }
+                    }
+                }
+            }
+        }
+        for (size_t i=0;i<70;i++)    sigma(i)+=(sigma1(i)+2.0*sigma2(i)+sigma3(i)+0.5*sigma4(i))/3.0;
     }
 }
 

@@ -1,8 +1,6 @@
 #include <iostream>
 #include "statvec.h"
 #include "sc_driftpass.h"
-#include "sc_equadpass.h"
-#include "sc_ebendpass.h"
 
 using namespace std;
 
@@ -12,7 +10,6 @@ int main()
     STATvec sigma;
     // operator overloading "(nx,npx,nz,npz)"
     sigma(2,0,0,0) = 1e-4;
-    //sigma(0,2,0,0) = 1e-4;
     sigma(0,0,2,0) = 1e-5;
     sigma(0,0,0,1) = 5e-8;
     // operator overloading "(n)"

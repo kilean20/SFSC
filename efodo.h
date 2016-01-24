@@ -15,23 +15,23 @@ void efodo(LINE & FODO)
 
   ELEMENT temp;
   for(int i=0;i<12;i++){
-      temp.SetElem(DRIFT_,0.5*lDrift);temp.Nint=3;
+      temp.SetElem(DRIFT_,0.5*lDrift);temp.Nint=300;
       FODO.Append(temp);
-      temp.SetElem(eBEND_,lBend, ang);temp.Nint=12;
+      temp.SetElem(eBEND_,lBend, ang);temp.Nint=1200;
       FODO.Append(temp);
-      temp.SetElem(DRIFT_,lDrift);temp.Nint=6;
+      temp.SetElem(DRIFT_,lDrift);temp.Nint=600;
       FODO.Append(temp);
-      temp.SetElem(eQUAD_,lQuad, quadK);temp.Nint=3;
+      temp.SetElem(eQUAD_,lQuad, quadK);temp.Nint=300;
       FODO.Append(temp);
-      temp.SetElem(DRIFT_,lDrift);temp.Nint=6;
+      temp.SetElem(DRIFT_,lDrift);temp.Nint=600;
       FODO.Append(temp);
-      temp.SetElem(eBEND_,lBend, ang);temp.Nint=12;
+      temp.SetElem(eBEND_,lBend, ang);temp.Nint=1200;
       FODO.Append(temp);
-      temp.SetElem(DRIFT_,lDrift);temp.Nint=6;
+      temp.SetElem(DRIFT_,lDrift);temp.Nint=600;
       FODO.Append(temp);
-      temp.SetElem(eQUAD_,lQuad, -quadK);temp.Nint=3;
+      temp.SetElem(eQUAD_,lQuad, -quadK);temp.Nint=300;
       FODO.Append(temp);
-      temp.SetElem(DRIFT_,0.5*lDrift);temp.Nint=3;
+      temp.SetElem(DRIFT_,0.5*lDrift);temp.Nint=300;
       FODO.Append(temp);
   }
   const double cSpeed=299792458;

@@ -8,4 +8,7 @@ TARGET = testSFSC
 
 SOURCES += test.cpp
 
-HEADERS += statvec.h
+HEADERS += statvec.h \
+    sc_driftpass.h \
+    sc_ebendpass.h \
+    sc_equadpass.h

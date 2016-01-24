@@ -1,8 +1,6 @@
 #include <iostream>
 #include "statvec.h"
 #include "sc_driftpass.h"
-#include "sc_equadpass.h"
-#include "sc_ebendpass.h"
 
 using namespace std;
 
