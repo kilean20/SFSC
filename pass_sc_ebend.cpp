@@ -1,14 +1,12 @@
-#ifndef SC_EBENDPASS_H
-#define SC_EBENDPASS_H
+#include "pass_sc_ebend.h"
+#include "global.h"
+#include "statvec.h"
 
 #include <cmath>
 using namespace std;
 
-#include "global.h"
-#include "statvec.h"
-
 double
-dx_eBend(size_t nx, size_t npx, size_t nz, size_t npz, STATvec & sigma, double  r, double iRho, double  Ksc, double  denom){
+dx_eBend(short nx, short npx, short nz, short npz, STATvec & sigma, double  r, double iRho, double  Ksc, double  denom){
     double temp=0.0;
     nx-=1;
     temp += sigma(nx,npx+1,nz,npz);
@@ -27,7 +25,7 @@ dx_eBend(size_t nx, size_t npx, size_t nz, size_t npz, STATvec & sigma, double  
 }
 
 double
-dz_eBend(size_t nx, size_t npx, size_t nz, size_t npz, STATvec & sigma, double  r, double iRho, double  Ksc, double  denom){
+dz_eBend(short nx, short npx, short nz, short npz, STATvec & sigma, double  r, double iRho, double  Ksc, double  denom){
     double temp=0.0;
     nz-=1;
     temp += sigma(nx,npx,nz,npz+1);
@@ -46,7 +44,7 @@ dz_eBend(size_t nx, size_t npx, size_t nz, size_t npz, STATvec & sigma, double  
 }
 
 double
-dpx_eBend(size_t nx, size_t npx, size_t nz, size_t npz, STATvec & sigma, double  r, double iRho, double  Ksc, double  denom){
+dpx_eBend(short nx, short npx, short nz, short npz, STATvec & sigma, double  r, double iRho, double  Ksc, double  denom){
     double temp=0.0;
     npx-=1;
     temp += (Ksc*denom - iRho*iRho*(2.0-BETA2))*sigma(nx+1,npx,nz,npz);
@@ -68,7 +66,7 @@ dpx_eBend(size_t nx, size_t npx, size_t nz, size_t npz, STATvec & sigma, double 
 }
 
 double
-dpz_eBend(size_t nx, size_t npx, size_t nz, size_t npz, STATvec & sigma, double  r, double iRho, double  Ksc, double  denom){
+dpz_eBend(short nx, short npx, short nz, short npz, STATvec & sigma, double  r, double iRho, double  Ksc, double  denom){
     double temp=0.0;
     npz-=1;
     temp += (Ksc*denom/r)*sigma(nx,npx,nz+1,npz);
@@ -80,7 +78,7 @@ dpz_eBend(size_t nx, size_t npx, size_t nz, size_t npz, STATvec & sigma, double 
     return temp;
 }
 
-void sc_eBendPass(STATvec & sigma, double  L, double Angle, double Ksc, size_t Nint){
+void sc_eBendPass(STATvec & sigma, double  L, double Angle, double Ksc, short Nint){
 
     const double iRho = L/Angle;
     const double ds = L/(double)Nint;
@@ -88,14 +86,14 @@ void sc_eBendPass(STATvec & sigma, double  L, double Angle, double Ksc, size_t N
     double r, denom;
     STATvec sigma1,sigma2,sigma3,sigma4,sigmaTemp;
 
-    for (size_t i=0;i<Nint;i++){
+    for (short i=0;i<Nint;i++){
         denom =1.0/(sigma(2,0,0,0)*(sigma(2,0,0,0)+sigma(0,0,2,0)));
         r=sigma(0,0,2,0)/sigma(2,0,0,0);
 
-        for (size_t nx=0;nx<4;nx++){
-            for (size_t npx=0;npx<4;npx++){
-                for (size_t nz=0;nz<4;nz++){
-                    for (size_t npz=0;npz<4;npz++){
+        for (short nx=0;nx<4;nx++){
+            for (short npx=0;npx<4;npx++){
+                for (short nz=0;nz<4;nz++){
+                    for (short npz=0;npz<4;npz++){
                         if(nx+npx+nz+npz<5){
                             sigma1(nx,npx,nz,npz)=0.5*ds*(nx*dx_eBend(nx,npx,nz,npz,sigma,r,iRho,Ksc,denom)
                                                           + npx*dpx_eBend(nx,npx,nz,npz,sigma,r,iRho,Ksc,denom)
@@ -108,10 +106,10 @@ void sc_eBendPass(STATvec & sigma, double  L, double Angle, double Ksc, size_t N
         }
         sigmaTemp=sigma+sigma1;
         r=(sigma(0,0,2,0)+sigma1(0,0,2,0))/(sigma(2,0,0,0)+sigma1(2,0,0,0));
-        for (size_t nx=0;nx<4;nx++){
-            for (size_t npx=0;npx<4;npx++){
-                for (size_t nz=0;nz<4;nz++){
-                    for (size_t npz=0;npz<4;npz++){
+        for (short nx=0;nx<4;nx++){
+            for (short npx=0;npx<4;npx++){
+                for (short nz=0;nz<4;nz++){
+                    for (short npz=0;npz<4;npz++){
                         if(nx+npx+nz+npz<5){
                             sigma2(nx,npx,nz,npz)=0.5*ds*(nx*dx_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
                                                           + npx*dpx_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
@@ -124,10 +122,10 @@ void sc_eBendPass(STATvec & sigma, double  L, double Angle, double Ksc, size_t N
         }
         sigmaTemp=sigma+sigma2;
         r=(sigma(0,0,2,0)+sigma2(0,0,2,0))/(sigma(2,0,0,0)+sigma2(2,0,0,0));
-        for (size_t nx=0;nx<4;nx++){
-            for (size_t npx=0;npx<4;npx++){
-                for (size_t nz=0;nz<4;nz++){
-                    for (size_t npz=0;npz<4;npz++){
+        for (short nx=0;nx<4;nx++){
+            for (short npx=0;npx<4;npx++){
+                for (short nz=0;nz<4;nz++){
+                    for (short npz=0;npz<4;npz++){
                         if(nx+npx+nz+npz<5){
                             sigma3(nx,npx,nz,npz)=ds*(nx*dx_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
                                                       + npx*dpx_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
@@ -140,10 +138,10 @@ void sc_eBendPass(STATvec & sigma, double  L, double Angle, double Ksc, size_t N
         }
         sigmaTemp=sigma+sigma3;
         r=(sigma(0,0,2,0)+sigma3(0,0,2,0))/(sigma(2,0,0,0)+sigma3(2,0,0,0));
-        for (size_t nx=0;nx<4;nx++){
-            for (size_t npx=0;npx<4;npx++){
-                for (size_t nz=0;nz<4;nz++){
-                    for (size_t npz=0;npz<4;npz++){
+        for (short nx=0;nx<4;nx++){
+            for (short npx=0;npx<4;npx++){
+                for (short nz=0;nz<4;nz++){
+                    for (short npz=0;npz<4;npz++){
                         if(nx+npx+nz+npz<5){
                             sigma4(nx,npx,nz,npz)=ds*(nx*dx_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
                                                       + npx*dpx_eBend(nx,npx,nz,npz,sigmaTemp,r,iRho,Ksc,denom)
@@ -154,9 +152,7 @@ void sc_eBendPass(STATvec & sigma, double  L, double Angle, double Ksc, size_t N
                 }
             }
         }
-        for (size_t i=0;i<70;i++)    sigma(i)+=(sigma1(i)+2.0*sigma2(i)+sigma3(i)+0.5*sigma4(i))/3.0;
+        for (short i=0;i<70;i++)    sigma(i)+=(sigma1(i)+2.0*sigma2(i)+sigma3(i)+0.5*sigma4(i))/3.0;
     }
 }
-
-#endif
 

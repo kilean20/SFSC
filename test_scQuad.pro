@@ -9,12 +9,12 @@ TARGET = beamWaistDrift
 
 
 SOURCES += \
-    main_beamwaist.cpp \
-    pass_sc_drift.cpp \
     statvec.cpp \
-    pass_sc_equad.cpp
+    pass_sc_equad.cpp \
+    pass_sc_drift.cpp \
+    test_scQuad.cpp
 
 HEADERS += \
-    pass_sc_drift.h \
     statvec.h \
-    pass_sc_equad.h
+    pass_sc_equad.h \
+    pass_sc_drift.h

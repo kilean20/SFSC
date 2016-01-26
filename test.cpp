@@ -1,8 +1,8 @@
 #include <iostream>
 #include "statvec.h"
-#include "sc_driftpass.h"
-#include "sc_equadpass.h"
-#include "sc_ebendpass.h"
+#include "pass_sc_drift.h"
+#include "pass_sc_ebend.h"
+#include "pass_sc_equad.h"
 
 using namespace std;
 
@@ -16,7 +16,8 @@ int main()
     sigma(0,0,2,0) = 1e-5;
     sigma(0,0,0,1) = 5e-8;
     // operator overloading "(n)"
-    sigma(2) = 3e-8;
+    sigma(2) = 1e-8;
+    sigma(2) += sigma(2)+sigma(2);
     cout << sigma(0) <<"\t"<< sigma(1) <<"\t"<< sigma(2) << endl;
     cout << sigma(0,0,0,1) <<"\t"<< sigma(0,0,1,0) <<"\t"<< sigma(0,1,0,0) << endl;
 

@@ -7,22 +7,31 @@
 TARGET = run
 
 HEADERS += \
-    driftpass.h \
-    ebendpass.h \
     efodo.h \
     element.h \
-    equadpass.h \
     global.h \
     line.h \
-    rfcavpass.h \
-    sc_driftpass.h \
-    sc_ebendpass.h \
-    sc_equadpass.h \
-    statvec.h
+    statvec.h \
+    pass_drift.h \
+    pass_ebend.h \
+    pass_equad.h \
+    pass_rfcav.h \
+    pass_sc_drift.h \
+    pass_sc_ebend.h \
+    pass_sc_equad.h
 
 SOURCES += \
     element.cpp \
     line.cpp \
-    main.cpp
+    main.cpp \
+    efodo.cpp \
+    pass_drift.cpp \
+    pass_ebend.cpp \
+    pass_equad.cpp \
+    pass_rfcav.cpp \
+    pass_sc_drift.cpp \
+    pass_sc_ebend.cpp \
+    pass_sc_equad.cpp \
+    statvec.cpp
 
 

@@ -4,7 +4,6 @@
 #include <vector>
 #include "element.h"
 
-using namespace std;
 //=========================================================================
 //
 //                               Line  class
@@ -17,9 +16,9 @@ public:
   void Update ();
   void Append(ELEMENT elem);
 
-  vector<ELEMENT> Cell;
+  std::vector<ELEMENT> Cell;
   double Length;		//---length of reference orbit
-  size_t Ncell;			//---number of elements
+  short Ncell;			//---number of elements
 };
 
 #endif

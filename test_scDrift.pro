@@ -4,15 +4,15 @@
 #
 #-------------------------------------------------
 
-TARGET = testSFSC
+TARGET = beamWaistDrift
 
-SOURCES += test.cpp \
+
+
+SOURCES += \
     pass_sc_drift.cpp \
-    pass_sc_ebend.cpp \
-    pass_sc_equad.cpp \
-    statvec.cpp
+    statvec.cpp \
+    test_scDrift.cpp
 
-HEADERS += statvec.h \
+HEADERS += \
     pass_sc_drift.h \
-    pass_sc_ebend.h \
-    pass_sc_equad.h
+    statvec.h

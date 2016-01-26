@@ -1,17 +1,14 @@
-#ifndef EBENDPASS_H
-#define EBENDPASS_H
+#include "global.h"
+#include "pass_ebend.h"
 
 #include <cmath>
 #include <vector>
 using namespace std;
 
-#include "global.h"
-
 //=============================================================================
 //                       eBendSpinPass 2nd order method
 //=============================================================================
-inline void
-eBendSpinPass(vector<double> &x, double L, double ANGLE, size_t Nint){
+void eBendSpinPass(vector<double> &x, double L, double ANGLE, short Nint){
     x[s_]=0.0; // initialize s. s=0 is the element entrance
     const double iRHO=ANGLE/L;
     double hs = (1.0 + x[x_]*iRHO );
@@ -27,7 +24,7 @@ eBendSpinPass(vector<double> &x, double L, double ANGLE, size_t Nint){
     double lambda = 0.5*L/x[ps_]/(double)Nint;
 
     // main loop
-    for(size_t i=0; i<Nint ;i++)
+    for(short i=0; i<Nint ;i++)
     {
         if(i==Nint-1)
         {
@@ -138,28 +135,27 @@ eBendSpinPass(vector<double> &x, double L, double ANGLE, size_t Nint){
 //=============================================================================
 //                 eBendSpinPass High order composition method
 //=============================================================================
-inline void
-eBendSpinPass(vector<double> &x, double L, double ANGLE, size_t Nint, size_t Norder){
+void eBendSpinPass(vector<double> &x, double L, double ANGLE, short Nint, short Norder){
     // initialize step size
     vector<double> R;
-    size_t nR;
+    short nR;
     switch (Norder) {
     case 2:
         R.push_back(1.0);
         nR = 1;
         break;
     case 4:
-        for(size_t i=0;i<3;i++)
+        for(short i=0;i<3;i++)
         R.push_back(R4[i]);
         nR = 3;
         break;
     case 6:
-        for(size_t i=0;i<7;i++)
+        for(short i=0;i<7;i++)
         R.push_back(R6[i]);
         nR = 7;
         break;
     default:
-        for(size_t i=0;i<3;i++)
+        for(short i=0;i<3;i++)
         R.push_back(R4[i]);
         nR = 3;
         break;
@@ -180,7 +176,7 @@ eBendSpinPass(vector<double> &x, double L, double ANGLE, size_t Nint, size_t Nor
     double lambda = 0.5*L/x[ps_]/(double)Nint;
 
     // main loop
-    for(size_t i=0; i<Nint ;i++)
+    for(short i=0; i<Nint ;i++)
     {
         if(i==Nint-1)
         {
@@ -225,7 +221,7 @@ eBendSpinPass(vector<double> &x, double L, double ANGLE, size_t Nint, size_t Nor
         //transverse drift
         x[x_] += x[px_] *R[0]*lambda;
         x[z_] += x[pz_] *R[0]*lambda;
-        for(size_t r=1; r<nR; r++)
+        for(short r=1; r<nR; r++)
         {
             //kick
             hs = (1.0 + x[x_]*iRHO );
@@ -331,8 +327,7 @@ eBendSpinPass(vector<double> &x, double L, double ANGLE, size_t Nint, size_t Nor
 //=============================================================================
 //                       eBendOrbitPass 2nd order method
 //=============================================================================
-inline void
-eBendOrbitPass(vector<double> &x, double L, double ANGLE, size_t Nint){
+void eBendOrbitPass(vector<double> &x, double L, double ANGLE, short Nint){
     x[s_]=0.0; // initialize s. s=0 is the element entrance
     const double iRHO=ANGLE/L;
     double hs = (1.0 + x[x_]*iRHO );
@@ -345,7 +340,7 @@ eBendOrbitPass(vector<double> &x, double L, double ANGLE, size_t Nint){
     double lambda = 0.5*L/x[ps_]/(double)Nint;
 
     // main loop
-    for(size_t i=0; i<Nint ;i++)
+    for(short i=0; i<Nint ;i++)
     {
         if(i==Nint-1)
         {
@@ -401,29 +396,28 @@ eBendOrbitPass(vector<double> &x, double L, double ANGLE, size_t Nint){
 //=============================================================================
 //                eBendOrbitPass High order composition method
 //=============================================================================
-inline void
-eBendOrbitPass(vector<double> &x, double L, double ANGLE, size_t Nint, size_t Norder){
+void eBendOrbitPass(vector<double> &x, double L, double ANGLE, short Nint, short Norder){
 
     // initialize step size
     vector<double> R;
-    size_t nR;
+    short nR;
     switch (Norder) {
     case 2:
         R.push_back(1.0);
         nR = 1;
         break;
     case 4:
-        for(size_t i=0;i<3;i++)
+        for(short i=0;i<3;i++)
         R.push_back(R4[i]);
         nR = 3;
         break;
     case 6:
-        for(size_t i=0;i<7;i++)
+        for(short i=0;i<7;i++)
         R.push_back(R6[i]);
         nR = 7;
         break;
     default:
-        for(size_t i=0;i<3;i++)
+        for(short i=0;i<3;i++)
         R.push_back(R4[i]);
         nR = 3;
         break;
@@ -441,7 +435,7 @@ eBendOrbitPass(vector<double> &x, double L, double ANGLE, size_t Nint, size_t No
     double lambda = 0.5*L/x[ps_]/(double)Nint;
 
     // main loop
-    for(size_t i=0; i<Nint ;i++)
+    for(short i=0; i<Nint ;i++)
     {
         if(i==Nint-1)
         {
@@ -458,7 +452,7 @@ eBendOrbitPass(vector<double> &x, double L, double ANGLE, size_t Nint, size_t No
         //transverse drift
         x[x_] += x[px_] *R[0]*2.0*lambda;
         x[z_] += x[pz_] *R[0]*2.0*lambda;
-        for(size_t r=1; r<nR; r++)
+        for(short r=1; r<nR; r++)
         {
             //kick
             hs = (1.0 + x[x_]*iRHO );
@@ -505,6 +499,4 @@ eBendOrbitPass(vector<double> &x, double L, double ANGLE, size_t Nint, size_t No
     //x[s_] += x[ps_]/(hs*hs) *lambda; // uncomment when you like to check if correction worked fine
     x[vt_] += dummy * lambda - L;
 }
-
-#endif // EBENDPASS_H
 

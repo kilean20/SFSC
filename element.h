@@ -1,11 +1,9 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
+
 #include <vector>
-#include <cmath>
-#include "global.h"
 #include "statvec.h"
 
-using namespace std;
 //=========================================================================
 //                            electric elements
 //=========================================================================
@@ -46,22 +44,23 @@ private:
         eQUAD eQuad;
         RFCAV RFcav;
     };
-    size_t Type;
+    short Type;
 
 public:
     ELEMENT();
-    ELEMENT(size_t Type, double l);
-    ELEMENT(size_t Type, double l, double param);
-    ELEMENT(size_t Type, double param1, double param2, double param3);
+    ELEMENT(short Type, double l);
+    ELEMENT(short Type, double l, double param);
+    ELEMENT(short Type, double param1, double param2, double param3);
 
-    void SetElem(size_t Type, double l);
-    void SetElem(size_t Type, double l, double param);
-    void SetElem(size_t Type, double param1, double param2, double param3);
+    void SetElem(short Type, double l);
+    void SetElem(short Type, double l, double param);
+    void SetElem(short Type, double param1, double param2, double param3);
 
 
-    size_t Nint, Norder, FlagSpinTrack;
+    short Nint, Norder;
+    bool FlagSpinTrack;
     double L, S, Ksc;
-    void Pass (vector<double> &x);
+    void Pass (std::vector<double> &x);
     void sc_Pass (STATvec &sigma);
 };
 

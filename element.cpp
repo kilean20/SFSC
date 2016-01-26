@@ -1,14 +1,16 @@
 #include "element.h"
-#include "driftpass.h"
-#include "ebendpass.h"
-#include "equadpass.h"
-#include "rfcavpass.h"
-#include "sc_driftpass.h"
-#include "sc_ebendpass.h"
-#include "sc_equadpass.h"
 #include "global.h"
+#include "pass_drift.h"
+#include "pass_ebend.h"
+#include "pass_equad.h"
+#include "pass_rfcav.h"
+#include "pass_sc_drift.h"
+#include "pass_sc_ebend.h"
+#include "pass_sc_equad.h"
 
-//#include <armadillo>
+#include <vector>
+#include <cmath>
+using namespace std;
 
 //=========================================================================
 //
@@ -16,9 +18,9 @@
 //
 //=========================================================================
 //-------------------------------constructor0------------------------------
-ELEMENT::ELEMENT():Type(0),L(0){Norder=2; FlagSpinTrack=1;}
+ELEMENT::ELEMENT():Type(0),L(0),Ksc(0){Norder=2; FlagSpinTrack=1;}
 //-------------------------------constructor1------------------------------
-ELEMENT::ELEMENT(size_t type, double l):Type(type),L(l){
+ELEMENT::ELEMENT(short type, double l):Type(type),L(l),Ksc(0){
     Nint = 4;
     Norder=2;   FlagSpinTrack=1;
     switch (type){
@@ -31,7 +33,7 @@ ELEMENT::ELEMENT(size_t type, double l):Type(type),L(l){
     }
 }
 //------------------------------constructor2--------------------------------
-ELEMENT::ELEMENT(size_t type, double l,double param):Type(type),L(l){
+ELEMENT::ELEMENT(short type, double l,double param):Type(type),L(l),Ksc(0){
     Norder=2;   FlagSpinTrack=1;
     switch (type){
     case eBEND_:
@@ -49,7 +51,7 @@ ELEMENT::ELEMENT(size_t type, double l,double param):Type(type),L(l){
     }
 }
 //------------------------------constructor3--------------------------------
-ELEMENT::ELEMENT(size_t type, double v,double f,double phi):Type(type),L(0){
+ELEMENT::ELEMENT(short type, double v,double f,double phi):Type(type),L(0),Ksc(0){
     Norder=2;   FlagSpinTrack=1;
     switch (type){
     case RFcav_:
@@ -62,7 +64,7 @@ ELEMENT::ELEMENT(size_t type, double v,double f,double phi):Type(type),L(0){
 //=================================SetElem=================================
 //---------------------------------SetElem1--------------------------------
 void
-ELEMENT::SetElem(size_t type, double l){
+ELEMENT::SetElem(short type, double l){
     Type=type; L=l;
     switch (type){
     case DRIFT_:
@@ -75,7 +77,7 @@ ELEMENT::SetElem(size_t type, double l){
 }
 //---------------------------------SetElem2--------------------------------
 void
-ELEMENT::SetElem(size_t type, double l, double param){
+ELEMENT::SetElem(short type, double l, double param){
     Type=type; L=l;
     switch (type){
     case eBEND_:
@@ -94,7 +96,7 @@ ELEMENT::SetElem(size_t type, double l, double param){
 }
 //---------------------------------SetElem3--------------------------------
 void
-ELEMENT::SetElem(size_t type, double v,double f,double phi){
+ELEMENT::SetElem(short type, double v,double f,double phi){
     Type=type;
     switch (type){
     case RFcav_:

@@ -1,4 +1,9 @@
 #include "line.h"
+#include "element.h"
+#include <vector>
+
+using namespace std;
+
 //=========================================================================
 //
 //                               Line  class
@@ -13,7 +18,7 @@ LINE::LINE ()
 void LINE::Update ()
 {
     double sPointer = 0.;
-    for (size_t i = 0; i < Cell.size (); i++)
+    for (short i = 0; i < Cell.size (); i++)
     {
         Cell[i].S = sPointer;
         sPointer = Cell[i].L + sPointer;
