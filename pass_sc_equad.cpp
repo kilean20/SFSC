@@ -61,9 +61,9 @@ dpz_eQuad(short nx, short npx, short nz, short npz, STATvec & sigma, double  r, 
     return temp;
 }
 
-//void sc_eQuadPass(STATvec & sigma, double  L, double K1, double  Ksc, short Nint){
-void sc_eQuadPass(STATvec & sigma, double  L, double Ksc, short Nint){
-    double K1=0.0;
+void sc_eQuadPass(STATvec & sigma, double  L, double K1, double  Ksc, short Nint){
+//void sc_eQuadPass(STATvec & sigma, double  L, double Ksc, short Nint){
+    //double K1=0.0;
 
     const double ds = L/(double)Nint;
 
