@@ -10,27 +10,27 @@ void efodo(LINE & FODO)
 
     double lBend = 0.4;
     double lQuad = 0.1;
-    double lDrift = 0.2;
+    double lDrift_ = 0.2;
 
   ELEMENT temp;
   for(int i=0;i<12;i++){
-      temp.SetElem(DRIFT_,0.5*lDrift);temp.Nint=30;
+      temp.SetElem(DRIFT_,0.5*lDrift_);temp.Nint=30;
       FODO.Append(temp);
       temp.SetElem(eBEND_,lBend, ang);temp.Nint=120;
       FODO.Append(temp);
-      temp.SetElem(DRIFT_,lDrift);temp.Nint=60;
+      temp.SetElem(DRIFT_,lDrift_);temp.Nint=60;
       FODO.Append(temp);
       temp.SetElem(eQUAD_,lQuad, quadK);temp.Nint=30;
       FODO.Append(temp);
-      temp.SetElem(DRIFT_,lDrift);temp.Nint=60;
+      temp.SetElem(DRIFT_,lDrift_);temp.Nint=60;
       FODO.Append(temp);
       temp.SetElem(eBEND_,lBend, ang);temp.Nint=120;
       FODO.Append(temp);
-      temp.SetElem(DRIFT_,lDrift);temp.Nint=60;
+      temp.SetElem(DRIFT_,lDrift_);temp.Nint=60;
       FODO.Append(temp);
       temp.SetElem(eQUAD_,lQuad, -quadK);temp.Nint=30;
       FODO.Append(temp);
-      temp.SetElem(DRIFT_,0.5*lDrift);temp.Nint=30;
+      temp.SetElem(DRIFT_,0.5*lDrift_);temp.Nint=30;
       FODO.Append(temp);
   }
   const double cSpeed=299792458;

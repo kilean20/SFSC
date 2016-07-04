@@ -3,7 +3,7 @@
 
 #include <vector>
 
-void DriftPass(std::vector<double> &x, double L);
+void Drift_Pass(std::vector<double> &x, double L);
 
 #endif // DRIFTPASS_H
 

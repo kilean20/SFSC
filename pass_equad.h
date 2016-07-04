@@ -4,13 +4,13 @@
 #include <vector>
 
 //eQuadSpinPass 2nd order method
-void eQuadSpinPass(std::vector<double> &x, double L, double K1, short Nint);
+void eQuadSpinPass(std::vector<double> &x, double L, double K1, unsigned Nint);
 //eQuadSpinPass High order composition method
-void eQuadSpinPass(std::vector<double> &x, double L, double K1, short Nint, short Norder);
+void eQuadSpinPass(std::vector<double> &x, double L, double K1, unsigned Nint, unsigned Norder);
 //eQuadOrbitPass 2nd order method
-void eQuadOrbitPass(std::vector<double> &x, double L, double K1, short Nint);
+void eQuadOrbitPass(std::vector<double> &x, double L, double K1, unsigned Nint);
 //eQuadOrbitPass High order composition method
-void eQuadOrbitPass(std::vector<double> &x, double L, double K1, short Nint, short Norder);
+void eQuadOrbitPass(std::vector<double> &x, double L, double K1, unsigned Nint, unsigned Norder);
 
 #endif  //EQUADPASS
 

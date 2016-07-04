@@ -18,7 +18,7 @@ public:
 
   std::vector<ELEMENT> Cell;
   double Length;		//---length of reference orbit
-  short Ncell;			//---number of elements
+  unsigned Ncell;			//---number of elements
 };
 
 #endif

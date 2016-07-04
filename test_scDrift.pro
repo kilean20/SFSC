@@ -4,15 +4,17 @@
 #
 #-------------------------------------------------
 
-TARGET = beamWaistDrift
-
-
+TARGET = testSCdrift
 
 SOURCES += \
     pass_sc_drift.cpp \
     statvec.cpp \
-    test_scDrift.cpp
+    test_scDrift.cpp \
+    pass_sc_gaussian.cpp \
+    pass_rk4_sc_drift.cpp
 
 HEADERS += \
     pass_sc_drift.h \
-    statvec.h
+    statvec.h \
+    pass_sc_gaussian.h \
+    pass_rk4_sc_drift.h

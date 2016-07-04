@@ -18,7 +18,7 @@ LINE::LINE ()
 void LINE::Update ()
 {
     double sPointer = 0.;
-    for (short i = 0; i < Cell.size (); i++)
+    for (unsigned i = 0; i < Cell.size (); i++)
     {
         Cell[i].S = sPointer;
         sPointer = Cell[i].L + sPointer;

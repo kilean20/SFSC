@@ -10,15 +10,13 @@ TARGET = test_sc_quad
 
 SOURCES += \
     statvec.cpp \
-    test_scQuad.cpp \
     pass_sc_mquad.cpp \
     pass_sc_drift.cpp \
     pass_sc_gaussian.cpp \
-    pass_sc_equad.cpp
+    test_6_2_resonance.cpp
 
 HEADERS += \
     statvec.h \
     pass_sc_mquad.h \
     pass_sc_drift.h \
-    pass_sc_gaussian.h \
-    pass_sc_equad.h
+    pass_sc_gaussian.h

@@ -36,7 +36,7 @@ int main()
     cout << sigma(2,0,0,0) <<"\t"<< sigma(0,0,2,0) <<"\t"<< sigma(0,1,0,0) << endl;
 
 
-    sc_DriftPass(sigma, 0.5, 1e-8, 20);
+    sc_Drift_Pass(sigma, 0.5, 1e-8, 20);
     cout << sigma(2,0,0,0) <<"\t"<< sigma(0,0,2,0) <<"\t"<< sigma(0,1,0,0) << endl;
 
     sc_eQuadPass(sigma, 0.5, 0.7, 0.0, 4);

@@ -21,7 +21,7 @@ const double R6[7]={0.78451361047755726382, 0.23557321335935813368,
 enum x_index {x_=0, px_=1, s_= 2, ps_=3, z_=4, pz_=5, vt_=6, dE_=7, Sx_=8, Ss_=9};
 
 //-------------------------state-vector-index------------------------------
-enum type_index {DRIFT_=1, eBEND_=2, eQUAD_= 3, RFcav_=4};
+enum type_index {DRIFT_, RFcav_, eBEND_, eQUAD_, mBEND_, mQUAD_};
 
 //-----------relativistic parameters for electron magic energy-------------
 const double GAMMA=29.38243572993826;

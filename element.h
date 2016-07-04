@@ -4,13 +4,19 @@
 #include <vector>
 #include "statvec.h"
 
+
 //=========================================================================
-//                            electric elements
+//
+//                               Elements
+//
 //=========================================================================
 //--------------------------------DRIFT------------------------------------
 struct DRIFT
 {
 };
+//=========================================================================
+//                            electric elements
+//=========================================================================
 //--------------------------------eBEND------------------------------------
 struct eBEND
 {
@@ -18,6 +24,19 @@ struct eBEND
 };
 //--------------------------------eQUAD------------------------------------
 struct eQUAD
+{
+    double K1;
+};
+//=========================================================================
+//                            magnetic elements
+//=========================================================================
+//--------------------------------mBEND------------------------------------
+struct mBEND
+{
+    double Angle;
+};
+//--------------------------------mQUAD------------------------------------
+struct mQUAD
 {
     double K1;
 };
@@ -39,25 +58,27 @@ class ELEMENT
 {
 private:
     union {
-        DRIFT Drift;
+        DRIFT Drift_;
         eBEND eBend;
         eQUAD eQuad;
+        mBEND mBend;
+        mQUAD mQuad;
         RFCAV RFcav;
     };
-    short Type;
+    unsigned Type;
 
 public:
     ELEMENT();
-    ELEMENT(short Type, double l);
-    ELEMENT(short Type, double l, double param);
-    ELEMENT(short Type, double param1, double param2, double param3);
+    ELEMENT(unsigned Type, double l);
+    ELEMENT(unsigned Type, double l, double param);
+    ELEMENT(unsigned Type, double param1, double param2, double param3);
 
-    void SetElem(short Type, double l);
-    void SetElem(short Type, double l, double param);
-    void SetElem(short Type, double param1, double param2, double param3);
+    void SetElem(unsigned Type, double l);
+    void SetElem(unsigned Type, double l, double param);
+    void SetElem(unsigned Type, double param1, double param2, double param3);
 
 
-    short Nint, Norder;
+    unsigned Nint, Norder;
     bool FlagSpinTrack;
     double L, S, Ksc;
     void Pass (std::vector<double> &x);

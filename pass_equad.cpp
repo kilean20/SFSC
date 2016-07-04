@@ -8,7 +8,7 @@ using namespace std;
 //=============================================================================
 //                       eQuadSpinPass 2nd order method
 //=============================================================================
-void eQuadSpinPass(vector<double> &x, double L, double K1, short Nint){
+void eQuadSpinPass(vector<double> &x, double L, double K1, unsigned Nint){
     const double betaGammaK1 = BETAGAMMA*K1;
     double dummy = x[dE_]*BETA2 + 1.0 - 0.5*K1*(x[x_]*x[x_]-x[z_]*x[z_])*BETA2;
 
@@ -22,7 +22,7 @@ void eQuadSpinPass(vector<double> &x, double L, double K1, short Nint){
     double lambda = 0.5*L/x[ps_]/(double)Nint;
 
     // main loop
-    for(short i=0; i<Nint ;i++)
+    for(unsigned i=0; i<Nint ;i++)
     {
         if(i==0)
         {
@@ -80,27 +80,27 @@ void eQuadSpinPass(vector<double> &x, double L, double K1, short Nint){
 //=============================================================================
 //                 eQuadSpinPass High order composition method
 //=============================================================================
-void eQuadSpinPass(vector<double> &x, double L, double K1, short Nint, short Norder){
+void eQuadSpinPass(vector<double> &x, double L, double K1, unsigned Nint, unsigned Norder){
     // initialize step size
     vector<double> R;
-    short nR;
+    unsigned nR;
     switch (Norder) {
     case 2:
         R.push_back(1.0);
         nR = 1;
         break;
     case 4:
-        for(short i=0;i<3;i++)
+        for(unsigned i=0;i<3;i++)
         R.push_back(R4[i]);
         nR = 3;
         break;
     case 6:
-        for(short i=0;i<7;i++)
+        for(unsigned i=0;i<7;i++)
         R.push_back(R6[i]);
         nR = 7;
         break;
     default:
-        for(short i=0;i<3;i++)
+        for(unsigned i=0;i<3;i++)
         R.push_back(R4[i]);
         nR = 3;
         break;
@@ -119,7 +119,7 @@ void eQuadSpinPass(vector<double> &x, double L, double K1, short Nint, short Nor
     double lambda = 0.5*L/x[ps_]/(double)Nint;
 
     // main loop
-    for(short i=0; i<Nint ;i++)
+    for(unsigned i=0; i<Nint ;i++)
     {
         if(i==0)
         {
@@ -157,7 +157,7 @@ void eQuadSpinPass(vector<double> &x, double L, double K1, short Nint, short Nor
         //drift
         x[x_] += x[px_] *R[0]*lambda;
         x[z_] += x[pz_] *R[0]*lambda;
-        for(short r=1; r<nR; r++)
+        for(unsigned r=1; r<nR; r++)
         {
             //kick
             dummy = x[dE_]*BETA2 +1.0 - 0.5*K1*BETA2*(x[x_]*x[x_]-x[z_]*x[z_]);
@@ -214,7 +214,7 @@ void eQuadSpinPass(vector<double> &x, double L, double K1, short Nint, short Nor
 //=============================================================================
 //                       eQuadOrbitPass 2nd order method
 //=============================================================================
-void eQuadOrbitPass(vector<double> &x, double L, double K1, short Nint){
+void eQuadOrbitPass(vector<double> &x, double L, double K1, unsigned Nint){
     double dummy = x[dE_]*BETA2 + 1.0 - 0.5*K1*(x[x_]*x[x_]-x[z_]*x[z_])*BETA2;
 
     // initialize p_s : hard edge fringe field effect
@@ -224,7 +224,7 @@ void eQuadOrbitPass(vector<double> &x, double L, double K1, short Nint){
     double lambda = 0.5*L/x[ps_]/(double)Nint;
 
     // main loop
-    for(short i=0; i<Nint ;i++)
+    for(unsigned i=0; i<Nint ;i++)
     {
         if(i==0)
         {
@@ -256,27 +256,27 @@ void eQuadOrbitPass(vector<double> &x, double L, double K1, short Nint){
 //=============================================================================
 //                eQuadOrbitPass High order composition method
 //=============================================================================
-void eQuadOrbitPass(vector<double> &x, double L, double K1, short Nint, short Norder){
+void eQuadOrbitPass(vector<double> &x, double L, double K1, unsigned Nint, unsigned Norder){
     // initialize step size
     vector<double> R;
-    short nR;
+    unsigned nR;
     switch (Norder) {
     case 2:
         R.push_back(1.0);
         nR = 1;
         break;
     case 4:
-        for(short i=0;i<3;i++)
+        for(unsigned i=0;i<3;i++)
         R.push_back(R4[i]);
         nR = 3;
         break;
     case 6:
-        for(short i=0;i<7;i++)
+        for(unsigned i=0;i<7;i++)
         R.push_back(R6[i]);
         nR = 7;
         break;
     default:
-        for(short i=0;i<3;i++)
+        for(unsigned i=0;i<3;i++)
         R.push_back(R4[i]);
         nR = 3;
         break;
@@ -291,7 +291,7 @@ void eQuadOrbitPass(vector<double> &x, double L, double K1, short Nint, short No
     double lambda = 0.5*L/x[ps_]/(double)Nint;
 
     // main loop
-    for(short i=0; i<Nint ;i++)
+    for(unsigned i=0; i<Nint ;i++)
     {
         if(i==0)
         {
@@ -303,7 +303,7 @@ void eQuadOrbitPass(vector<double> &x, double L, double K1, short Nint, short No
         //drift
         x[x_] += x[px_] *R[0]*2.0*lambda;
         x[z_] += x[pz_] *R[0]*2.0*lambda;
-        for(short r=1; r<nR; r++)
+        for(unsigned r=1; r<nR; r++)
         {
             //kick
             dummy = x[dE_]*BETA2 +1.0 - 0.5*K1*BETA2*(x[x_]*x[x_]-x[z_]*x[z_]);

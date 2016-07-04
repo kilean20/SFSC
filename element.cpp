@@ -6,7 +6,8 @@
 #include "pass_rfcav.h"
 #include "pass_sc_drift.h"
 #include "pass_sc_ebend.h"
-#include "pass_sc_equad.h"
+#include "pass_sc_mquad.h"
+//#include "pass_sc_mbend.h"
 
 #include <vector>
 #include <cmath>
@@ -20,20 +21,20 @@ using namespace std;
 //-------------------------------constructor0------------------------------
 ELEMENT::ELEMENT():Type(0),L(0),Ksc(0){Norder=2; FlagSpinTrack=1;}
 //-------------------------------constructor1------------------------------
-ELEMENT::ELEMENT(short type, double l):Type(type),L(l),Ksc(0){
+ELEMENT::ELEMENT(unsigned type, double l):Type(type),L(l),Ksc(0){
     Nint = 4;
     Norder=2;   FlagSpinTrack=1;
     switch (type){
     case DRIFT_:
         DRIFT d;
-        Drift=d;
+        Drift_=d;
         break;
     default:
         break;
     }
 }
 //------------------------------constructor2--------------------------------
-ELEMENT::ELEMENT(short type, double l,double param):Type(type),L(l),Ksc(0){
+ELEMENT::ELEMENT(unsigned type, double l,double param):Type(type),L(l),Ksc(0){
     Norder=2;   FlagSpinTrack=1;
     switch (type){
     case eBEND_:
@@ -51,7 +52,7 @@ ELEMENT::ELEMENT(short type, double l,double param):Type(type),L(l),Ksc(0){
     }
 }
 //------------------------------constructor3--------------------------------
-ELEMENT::ELEMENT(short type, double v,double f,double phi):Type(type),L(0),Ksc(0){
+ELEMENT::ELEMENT(unsigned type, double v,double f,double phi):Type(type),L(0),Ksc(0){
     Norder=2;   FlagSpinTrack=1;
     switch (type){
     case RFcav_:
@@ -64,12 +65,12 @@ ELEMENT::ELEMENT(short type, double v,double f,double phi):Type(type),L(0),Ksc(0
 //=================================SetElem=================================
 //---------------------------------SetElem1--------------------------------
 void
-ELEMENT::SetElem(short type, double l){
+ELEMENT::SetElem(unsigned type, double l){
     Type=type; L=l;
     switch (type){
     case DRIFT_:
         DRIFT d;
-        Drift=d;
+        Drift_=d;
         break;
     default:
         break;
@@ -77,17 +78,27 @@ ELEMENT::SetElem(short type, double l){
 }
 //---------------------------------SetElem2--------------------------------
 void
-ELEMENT::SetElem(short type, double l, double param){
+ELEMENT::SetElem(unsigned type, double l, double param){
     Type=type; L=l;
     switch (type){
     case eBEND_:
-        eBEND b;  b.Angle=param;
-        eBend=b;
+        eBEND ebend;  ebend.Angle=param;
+        eBend=ebend;
         Nint = ceil(param/0.02); //default Nint
         break;
     case eQUAD_:
-        eQUAD q;  q.K1=param;
-        eQuad=q;
+        eQUAD equad;  equad.K1=param;
+        eQuad=equad;
+        Nint = (L*L*abs(param)/0.02); //default Nint
+        break;
+    case mBEND_:
+        mBEND mbend;  mbend.Angle=param;
+        mBend=mbend;
+        Nint = ceil(param/0.02); //default Nint
+        break;
+    case mQUAD_:
+        mQUAD mquad;  mquad.K1=param;
+        mQuad=mquad;
         Nint = (L*L*abs(param)/0.02); //default Nint
         break;
     default:
@@ -96,7 +107,7 @@ ELEMENT::SetElem(short type, double l, double param){
 }
 //---------------------------------SetElem3--------------------------------
 void
-ELEMENT::SetElem(short type, double v,double f,double phi){
+ELEMENT::SetElem(unsigned type, double v,double f,double phi){
     Type=type;
     switch (type){
     case RFcav_:
@@ -114,7 +125,7 @@ ELEMENT::Pass (vector<double> &x)
 {
     switch (Type) {
     case DRIFT_:
-        DriftPass(x, L);
+        Drift_Pass(x, L);
         break;
     case eBEND_:
         if (FlagSpinTrack)
@@ -140,6 +151,18 @@ ELEMENT::Pass (vector<double> &x)
             else
                 eQuadOrbitPass(x, L, eQuad.K1, Nint, Norder);
         break;
+    case mQUAD_:
+//        if (FlagSpinTrack)
+//            if (Norder==2)
+//                mQuadSpinPass(x, L, eQuad.K1, Nint);
+//            else
+//                mQuadSpinPass(x, L, eQuad.K1, Nint, Norder);
+//        else
+            if (Norder==2)
+                mQuadOrbitPass(x, L, eQuad.K1, Nint);
+            else
+                mQuadOrbitPass(x, L, eQuad.K1, Nint, Norder);
+        break;
     case RFcav_:
         RFcavPass(x, RFcav.Vrf, RFcav.Wrf, RFcav.Phase);
         break;
@@ -155,13 +178,19 @@ ELEMENT::sc_Pass (STATvec &sigma)
 {
     switch (Type) {
     case DRIFT_:
-        sc_DriftPass(sigma, L, Ksc, Nint);
+        sc_Drift_Pass(sigma, L, Ksc, Nint);
         break;
     case eBEND_:
         sc_eBendPass(sigma, L, eBend.Angle, Ksc, Nint);
         break;
     case eQUAD_:
         sc_eQuadPass(sigma, L, eQuad.K1, Ksc, Nint);
+        break;
+    case mBEND_:
+        //sc_mBendPass(sigma, L, mBend.Angle, Ksc, Nint);
+        break;
+    case mQUAD_:
+        sc_mQuadPass(sigma, L, mQuad.K1, Ksc, Nint);
         break;
     case RFcav_:
         break;

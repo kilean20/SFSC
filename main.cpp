@@ -14,7 +14,7 @@ int main()
     //Define the ring
     LINE FODO;    efodo(FODO);    //FODO.Update();
 
-    short nTurn=10;
+    unsigned nTurn=10;
     STATvec sigma;
     sigma(2,0,0,0)=1e-4;
     sigma(0,2,0,0)=1e-5;
@@ -22,8 +22,8 @@ int main()
     sigma(0,0,0,2)=1e-5;
 
 
-    for(short i=0;i<nTurn;i++){
-        for(short j=0;j<FODO.Ncell;j++) FODO.Cell[j].sc_Pass(sigma);
+    for(unsigned i=0;i<nTurn;i++){
+        for(unsigned j=0;j<FODO.Ncell;j++) FODO.Cell[j].sc_Pass(sigma);
             cout << "x=" << sigma(1,0,0,0) << "  x2=" << sigma(2,0,0,0) << endl;
     }
     return 0;

@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 
-void DriftPass(vector<double> &x, double L)
+void Drift_Pass(vector<double> &x, double L)
 {
     x[ps_]=sqrt( BETA2 *(x[dE_]+1.0/BETA2)*(x[dE_]+1.0/BETA2)-1.0/BETAGAMMA2 - x[px_]*x[px_] - x[pz_]*x[pz_] );
     const double lambda = L/x[ps_];
